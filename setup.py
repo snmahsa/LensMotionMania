@@ -8,7 +8,7 @@ setup(
     version='0.1',
     packages=find_packages(),
     install_requires=requirements,
-    description='Dip package for image and videos ',
+    description='Dip package for images and videos ',
     author='Mahsa Sanaei',
     author_email='mahsasanaei.n@gmail.com',
     packages=['Core']
