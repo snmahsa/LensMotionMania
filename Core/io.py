@@ -61,7 +61,7 @@ class Io:
         response = requests.get(url)
         image = PIL.Image.open(BytesIO(response.content))
         image = np.array(image)
-        image = self.image.astype(float)
+        image = image.astype(float)
 
         #Select new path for saving
         dest_directory = filedialog.askdirectory()
