@@ -3,4 +3,4 @@ from .io import Io
 from .Utils.transform import Transform
 from .Utils.color import Color
 from .report import Report
-from .noise import Noise
+from .noises import Noise
