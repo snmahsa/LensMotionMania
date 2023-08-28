@@ -5,21 +5,21 @@ from scipy.ndimage import convolve
 def mean_filter_color_image(image, window_size):
     b, g, r = cv2.split(image)
 
-    # اعمال فیلتر میانگین بر روی هر کانال رنگی
+    # Apply an average filter to each color channel
     b_filtered = cv2.blur(b, (window_size, window_size))
     g_filtered = cv2.blur(g, (window_size, window_size))
     r_filtered = cv2.blur(r, (window_size, window_size))
 
-    # ترکیب کانال‌های رنگی فیلتر شده
+    # Combination of filtered color channels
     filtered_image = cv2.merge((b_filtered, g_filtered, r_filtered))
 
     return filtered_image
 
 
 def mean_filter(image, window_size=3,padding=0):
-    # اندازه پنجره فیلتر
+    # Filter window size
     window_half = window_size // 2
-    # تصویر جدید
+    # New image
 
     if len(image.shape) == 2:  
         height, width = image.shape    
@@ -43,20 +43,20 @@ def mean_filter(image, window_size=3,padding=0):
 
 def _private_mean(height,width,part_image, window_half):
     filtered_image = np.zeros_like(part_image)
-        # اعمال فیلتر میانگین بر روی هر پیکسل
+        # Apply an average filter to each pixel
     for y in range(height):
         for x in range(width):
-            # محاسبه محدوده همسایگی برای هر پیکسل
+            # Calculate the neighborhood range for each pixel
             y_min = max(0, y - window_half)
             y_max = min(height, y + window_half + 1)
             x_min = max(0, x - window_half)
             x_max = min(width, x + window_half + 1)
 
-            # محاسبه میانگین مقادیر پیکسل‌های همسایه
+            # Calculate the average values ​​of neighboring pixels
             window = part_image[y_min:y_max, x_min:x_max]
             mean_value = np.mean(window)
 
-            # اختصاص مقدار میانگین به پیکسل مرکزی
+            # Assign the mean value to the center pixel
             filtered_image[y, x] = mean_value
 
     return filtered_image            
