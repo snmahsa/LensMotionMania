@@ -2,18 +2,38 @@ from .dependencies import *
 from scipy.ndimage import convolve
 
 
-def mean_filter_color_image(image, window_size):
-    b, g, r = cv2.split(image)
+def mean_fast_filter(image, window_size, padding=0):
+    # b, g, r = cv2.split(image)
+    # padded_b = cv2.copyMakeBorder(b, padding, padding, padding, padding, cv2.BORDER_CONSTANT)
+    # padded_g = cv2.copyMakeBorder(g, padding, padding, padding, padding, cv2.BORDER_CONSTANT)
+    # padded_r = cv2.copyMakeBorder(r, padding, padding, padding, padding, cv2.BORDER_CONSTANT)
+    # # Apply an average filter to each color channel
+    # b_filtered = cv2.blur(padded_b, (window_size, window_size))
+    # g_filtered = cv2.blur(padded_g, (window_size, window_size))
+    # r_filtered = cv2.blur(padded_r, (window_size, window_size))
 
-    # Apply an average filter to each color channel
-    b_filtered = cv2.blur(b, (window_size, window_size))
-    g_filtered = cv2.blur(g, (window_size, window_size))
-    r_filtered = cv2.blur(r, (window_size, window_size))
+    # # Combination of filtered color channels
+    # filtered_image = cv2.merge((b_filtered, g_filtered, r_filtered))
 
-    # Combination of filtered color channels
-    filtered_image = cv2.merge((b_filtered, g_filtered, r_filtered))
+    # return filtered_image
 
-    return filtered_image
+
+    if len(image.shape) == 2:  
+        padded_image = cv2.copyMakeBorder(image, padding, padding, padding, padding, cv2.BORDER_CONSTANT)
+        output_image =  cv2.blur(padded_image, (window_size, window_size))
+
+    elif len(image.shape) == 3 and image.shape[2] == 3:  
+        filtered_channels = []
+        for chanl in cv2.split(image):
+            filtered_channel= _private_fast_mean(chanl, window_size ,padding )
+            filtered_channels.append(filtered_channel)
+
+        output_image = cv2.merge(filtered_channels)
+
+    else:
+        raise ValueError("Unsupported image shape. Only grayscale and color images are supported.")
+
+    return output_image
 
 
 def mean_filter(image, window_size=3,padding=0):
@@ -59,4 +79,13 @@ def _private_mean(height,width,part_image, window_half):
             # Assign the mean value to the center pixel
             filtered_image[y, x] = mean_value
 
-    return filtered_image            
+    return filtered_image      
+
+def _private_fast_mean(chanl, window_size ,padding):
+    # Calculation of padding for each channel
+    padded_chanl = cv2.copyMakeBorder(chanl, padding, padding, padding, padding, cv2.BORDER_CONSTANT)
+    # Calculate the average for each channel
+    chanl_filtered = cv2.blur(padded_chanl, (window_size, window_size))
+
+    return chanl_filtered 
+
