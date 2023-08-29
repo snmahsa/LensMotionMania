@@ -1,48 +1,46 @@
 from .dependencies import *
-class Report:
-    def __init__(self,image) :
-        self.image = image
 
-    def display_hist_plt(self, bins=256, range=(0, 256), figsize=(8, 6), dpi=100):
-        """
-        Display the histogram of an image using Matplotlib.
 
-        Parameters:
-        -----------
-        img : numpy.ndarray
-            The image to show the histogram for.
-        bins : int, optional
-            The number of bins used in the histogram. Default is 256.
-        range : tuple, optional
-            The lower and upper range of the bins. Default is (0, 256).
-        figsize : tuple, optional
-            The size of the figure. Default is (8, 6).
-        dpi : int, optional
-            The resolution of the figure. Default is 100.
+def display_hist_plt(image, bins=256, range=(0, 256), figsize=(8, 6), dpi=100):
+    """
+    Display the histogram of an image using Matplotlib.
 
-        Returns:
-        --------
-        None : NoneType
-            This function does not return anything, it only displays the histogram.
-        """
-    
-        # Check if the input image is a valid numpy array.
-        if not isinstance(self.image, np.ndarray):
-            raise TypeError("Input image must be a numpy array.")
+    Parameters:
+    -----------
+    img : numpy.ndarray
+        The image to show the histogram for.
+    bins : int, optional
+        The number of bins used in the histogram. Default is 256.
+    range : tuple, optional
+        The lower and upper range of the bins. Default is (0, 256).
+    figsize : tuple, optional
+        The size of the figure. Default is (8, 6).
+    dpi : int, optional
+        The resolution of the figure. Default is 100.
 
-        # Create a new figure with the specified size and resolution.
-        fig, ax = plt.subplots(figsize=figsize, dpi=dpi)
+    Returns:
+    --------
+    None : NoneType
+        This function does not return anything, it only displays the histogram.
+    """
 
-        # Calculate the histogram of the input image.
-        hist, bins = np.histogram(self.image.ravel(), bins=bins, range=range)
+    # Check if the input image is a valid numpy array.
+    if not isinstance(image, np.ndarray):
+        raise TypeError("Input image must be a numpy array.")
 
-        # Plot the histogram.
-        ax.hist(self.image.ravel(), bins=bins, range=range)
+    # Create a new figure with the specified size and resolution.
+    fig, ax = plt.subplots(figsize=figsize, dpi=dpi)
 
-        # Set the axis labels and title.
-        ax.set_xlabel('Intensity')
-        ax.set_ylabel('Count')
-        ax.set_title('Histogram of Image')
+    # Calculate the histogram of the input image.
+    hist, bins = np.histogram(image.ravel(), bins=bins, range=range)
 
-        # Show the plot.
-        plt.show()
+    # Plot the histogram.
+    ax.hist(image.ravel(), bins=bins, range=range)
+
+    # Set the axis labels and title.
+    ax.set_xlabel('Intensity')
+    ax.set_ylabel('Count')
+    ax.set_title('Histogram of Image')
+
+    # Show the plot.
+    plt.show()
