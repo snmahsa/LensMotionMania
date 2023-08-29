@@ -2,7 +2,7 @@ from .dependencies import *
 from scipy.ndimage import convolve
 
 
-def mean_fast_filter(image, window_size, padding=0):
+def mean_fast_filter(image, window_size=3, padding=0):
     # b, g, r = cv2.split(image)
     # padded_b = cv2.copyMakeBorder(b, padding, padding, padding, padding, cv2.BORDER_CONSTANT)
     # padded_g = cv2.copyMakeBorder(g, padding, padding, padding, padding, cv2.BORDER_CONSTANT)
@@ -89,3 +89,6 @@ def _private_fast_mean(chanl, window_size ,padding):
 
     return chanl_filtered 
 
+def median(image, window_size, padding=0):
+    padded_image = cv2.copyMakeBorder(image, padding, padding, padding, padding, cv2.BORDER_CONSTANT)
+    return cv2.medianBlur(padded_image, window_size)
