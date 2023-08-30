@@ -11,5 +11,7 @@ setup(
     description='Dip package for images and videos ',
     author='Mahsa Sanaei',
     author_email='mahsasanaei.n@gmail.com',
-    packages=['Core']
+    url='https://github.com/snmahsa/ImageToolkit',
+    keywords =['Image Processing','Machine Learning','Deep Learning','Noises','Filters','Image']
+ 
     )
